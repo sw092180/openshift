@@ -70,16 +70,13 @@ RUN mkdir /.ansible
 RUN chmod -R 777 /.ansible
 RUN chmod -R 777 /etc/ansible/
 RUN mkdir -p /var/lib/jenkins
-RUN chown -R 1001:0 /var/lib/jenkins
-RUN chmod -R g+w /var/lib/jenkins
+RUN chmod -R 777 /var/lib/jenkins
 
 # Copy the entrypoint
 COPY configuration/* /var/lib/jenkins/
-USER 1001
 
 # Run the JNLP client by default
 # To use swarm client, specify "/var/lib/jenkins/run-swarm-client" as Command
-RUN chmod -R 777 /var/lib/jenkins
 ENTRYPOINT ["/var/lib/jenkins/run-jnlp-client"]
 
 EXPOSE 22

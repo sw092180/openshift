@@ -70,10 +70,22 @@ RUN mkdir /.ansible
 RUN chmod -R 777 /.ansible
 RUN chmod -R 777 /etc/ansible/
 RUN mkdir -p /var/lib/jenkins
-RUN chmod -R 777 /var/lib/jenkins
+RUN chgrp -R 0 /var/lib/jenkins \
+  && chmod -R g+rwX /var/lib/jenkins
 
 # Copy the entrypoint
 COPY configuration/* /var/lib/jenkins/
+
+# install the nss_wrapper
+RUN yum -y install nss_wrapper gettext
+
+# dynamically create passwd file
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+envsubst < ${HOME}/passwd.template > /tmp/passwd
+export LD_PRELOAD=/usr/lib64/libnss_wrapper.so
+export NSS_WRAPPER_PASSWD=/tmp/passwd
+export NSS_WRAPPER_GROUP=/etc/group
 
 # Run the JNLP client by default
 # To use swarm client, specify "/var/lib/jenkins/run-swarm-client" as Command

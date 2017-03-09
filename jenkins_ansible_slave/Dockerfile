@@ -79,6 +79,7 @@ USER 1001
 
 # Run the JNLP client by default
 # To use swarm client, specify "/var/lib/jenkins/run-swarm-client" as Command
+RUN chmod -R 777 /var/lib/jenkins
 ENTRYPOINT ["/var/lib/jenkins/run-jnlp-client"]
 
 EXPOSE 22

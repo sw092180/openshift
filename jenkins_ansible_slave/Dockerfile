@@ -72,7 +72,7 @@ RUN chmod -R 777 /etc/ansible/
 
 # create ansible user
 RUN useradd -m -d /home/ansible -s /bin/sh ansible
-echo "ansible:@ns1nl3" | chpasswd
+RUN echo "ansible:@ns1nl3" | chpasswd
 
 # make jenkins directory and set permissions
 RUN mkdir -p /var/lib/jenkins

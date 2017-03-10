@@ -69,9 +69,15 @@ RUN pip install ansible
 RUN mkdir /.ansible
 RUN chmod -R 777 /.ansible
 RUN chmod -R 777 /etc/ansible/
+
+# create ansible user
+RUN useradd -m -d /home/ansible -s /bin/sh ansible
+echo "ansible:@ns1nl3" | chpasswd
+
+# make jenkins directory and set permissions
 RUN mkdir -p /var/lib/jenkins
 RUN chgrp -R 0 /var/lib/jenkins \
-  && chmod -R g+rwX /var/lib/jenkins
+  && chmod -R 777 /var/lib/jenkins
 
 # Copy the entrypoint
 COPY configuration/* /var/lib/jenkins/

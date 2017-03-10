@@ -79,14 +79,6 @@ COPY configuration/* /var/lib/jenkins/
 # install the nss_wrapper
 RUN yum -y install nss_wrapper gettext
 
-# dynamically create passwd file
-export USER_ID=$(id -u)
-export GROUP_ID=$(id -g)
-envsubst < /var/lib/jenkins/passwd.template > /tmp/passwd
-export LD_PRELOAD=/usr/lib64/libnss_wrapper.so
-export NSS_WRAPPER_PASSWD=/tmp/passwd
-export NSS_WRAPPER_GROUP=/etc/group
-
 # Run the JNLP client by default
 # To use swarm client, specify "/var/lib/jenkins/run-swarm-client" as Command
 ENTRYPOINT ["/var/lib/jenkins/run-jnlp-client"]

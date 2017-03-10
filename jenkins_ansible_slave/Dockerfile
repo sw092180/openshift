@@ -75,7 +75,7 @@ RUN chgrp -R 0 /var/lib/jenkins \
 
 # Copy the entrypoint
 COPY configuration/* /var/lib/jenkins/
-RUN chmod -R g+rwX /var/lib/jenkins
+RUN chmod -R g+rwx /var/lib/jenkins
   
 # install the nss_wrapper
 RUN yum -y install nss_wrapper gettext
